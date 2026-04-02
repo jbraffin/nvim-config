@@ -51,3 +51,33 @@ keymap("n", "<C-y>", "<C-r>", opts)
 
 -- Save file
 keymap("n", "<C-s>", ":w<CR>", opts)
+
+-- ─────────────────────────────────────────────────────────────
+-- Session management
+-- ─────────────────────────────────────────────────────────────
+
+-- Quit Neovim cleanly with confirmation
+local function quit_neovim()
+  local modified_buffers = 0
+  for _, buf in ipairs(vim.api.nvim_list_bufs()) do
+    if vim.api.nvim_buf_is_loaded(buf) and vim.api.nvim_buf_get_option(buf, "modified") then
+      modified_buffers = modified_buffers + 1
+    end
+  end
+
+  if modified_buffers > 0 then
+    local choice = vim.fn.confirm(
+      "You have " .. modified_buffers .. " modified buffer(s). Quit Neovim?",
+      "&Yes\n&No",
+      2
+    )
+    if choice == 1 then
+      vim.cmd("qa!")
+    end
+  else
+    vim.cmd("qa!")
+  end
+end
+
+keymap("n", "<leader>q", quit_neovim, { noremap = true, silent = true, desc = "Quit Neovim" })
+keymap("n", "<leader>nq", quit_neovim, { noremap = true, silent = true, desc = "Quit Neovim (alias)" })

@@ -37,26 +37,30 @@ return {
   {
     "williamboman/mason-lspconfig.nvim",
     dependencies = { "mason.nvim", "nvim-lspconfig" },
-    event = { "BufReadPre", "BufNewFile" },
     config = function()
       require("mason-lspconfig").setup({
         ensure_installed = {
           "lua_ls",              -- Lua
           "pyright",             -- Python
-          "gopls",               -- Go
-          "ruby_ls",             -- Ruby
-          "bash-language-server", -- Bash
-          "jdtls",               -- Java
           "ts_ls",               -- TypeScript/JavaScript
-          "terraform-ls",        -- Terraform
-          "ansible-language-server", -- Ansible
+          "gopls",               -- Go
+          "jdtls",               -- Java
           "jsonls",              -- JSON
           "html",                -- HTML
           "cssls",               -- CSS
-          "eslint",              -- ESLint pour TypeScript/JavaScript
+          "dockerls",            -- Docker
+          "yamlls",              -- YAML
+          "terraformls",         -- Terraform
         },
         automatic_installation = true,
+        run_on_start = true,
       })
+
+      -- Forcer l'installation immédiate au démarrage
+      local installed_ok, mlc = pcall(require, "mason-lspconfig.install")
+      if installed_ok and mlc.install_all then
+        vim.defer_fn(mlc.install_all, 100)
+      end
     end,
   },
 
@@ -87,19 +91,6 @@ return {
             Lua = {
               diagnostics = {
                 globals = { "vim" },
-              },
-            },
-          },
-        },
-        bash_language_server = {},
-        ansible_language_server = {
-          settings = {
-            ansible = {
-              python = {
-                interpreterPath = "python3",
-              },
-              validation = {
-                enabled = true,
               },
             },
           },
@@ -142,16 +133,6 @@ return {
             },
           },
         },
-        ruby_ls = {
-          settings = {
-            rubyLsp = {
-              enablement = {
-                initializer = false,
-                bundler = false,
-              },
-            },
-          },
-        },
 
         -- ───────────────────────────────────────────────────────
         -- Interpreted Languages
@@ -165,18 +146,6 @@ return {
                 autoSearchPaths = true,
                 useLibraryCodeForTypes = true,
               },
-            },
-          },
-        },
-
-        -- ───────────────────────────────────────────────────────
-        -- Infrastructure & Data
-        -- ───────────────────────────────────────────────────────
-        terraform_ls = {
-          settings = {
-            terraform = {
-              path = "terraform",
-              loglevel = "warn",
             },
           },
         },
@@ -200,15 +169,37 @@ return {
         jsonls = {},
         html = {},
         cssls = {},
+        dockerls = {},
+        yamlls = {
+          settings = {
+            yaml = {
+              schemaStore = {
+                enable = true,
+              },
+              validate = true,
+            },
+          },
+        },
+        terraformls = {
+          settings = {
+            terraform = {
+              validateOnSave = true,
+            },
+          },
+        },
       }
 
       for server_name, config in pairs(servers) do
         -- Fusionner les capacités avec la config
         config.capabilities = capabilities
         
-        -- Utiliser lspconfig.setup() pour configurer les serveurs
-        local lspconfig = require("lspconfig")
-        lspconfig[server_name].setup(config)
+        -- Utiliser la nouvelle API Neovim 0.11+
+        vim.lsp.config(server_name, config)
+      end
+
+      -- Activer tous les serveurs configurés
+      for server_name, _ in pairs(servers) do
+        vim.lsp.enable(server_name)
       end
 
       -- ───────────────────────────────────────────────────────

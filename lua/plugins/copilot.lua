@@ -10,7 +10,7 @@ return {
   -- :Copilot auth
   {
     "github/copilot.vim",
-    event = "InsertEnter",
+    event = "VeryLazy",
     config = function()
       -- Configuration de Copilot
       vim.g.copilot_no_tab_map = true

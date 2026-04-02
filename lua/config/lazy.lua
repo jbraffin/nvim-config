@@ -25,7 +25,7 @@ require("lazy").setup({
   },
   install = {
     missing = true,
-    colorscheme = { "catppuccin" },
+    colorscheme = { "habamax" },  -- Fallback to built-in colorscheme
   },
   ui = {
     border = "rounded",

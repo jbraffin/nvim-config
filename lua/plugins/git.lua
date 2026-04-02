@@ -4,26 +4,6 @@
 
 return {
   -- ═══════════════════════════════════════════════════════════
-  -- Lazygit: Git Client TUI (Terminal User Interface)
-  -- ═══════════════════════════════════════════════════════════
-  -- Interface git complète : branches, commits, diff, rebase, etc.
-  {
-    "kdheepak/lazygit.nvim",
-    dependencies = {
-      "nvim-lua/plenary.nvim",
-    },
-    cmd = "LazyGit",
-    keys = {
-      { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
-    },
-    config = function()
-      -- Configuration optionnelle
-      vim.g.lazygit_floating_window_scaling_factor = 0.9
-      vim.g.lazygit_floating_window_corner = "TR"
-    end,
-  },
-
-  -- ═══════════════════════════════════════════════════════════
   -- Gitsigns: Git changes visualization
   -- ═══════════════════════════════════════════════════════════
   -- Affiche les changements Git à côté des numéros de ligne
@@ -66,9 +46,6 @@ return {
           relative = "cursor",
           row = 0,
           col = 1,
-        },
-        yadm = {
-          enable = false,
         },
       })
 

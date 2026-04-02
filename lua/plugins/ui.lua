@@ -15,7 +15,7 @@ return {
     config = function()
       require("catppuccin").setup({
         flavour = "mocha", -- latte, frappe, macchiato, mocha
-        transparent_background = false,
+        transparent_background = true,
         integrations = {
           cmp = true,
           gitsigns = true,
@@ -43,11 +43,11 @@ return {
   -- Affiche l'état courant: mode, fichier, diagnostics, git
   {
     "nvim-lualine/lualine.nvim",
-    dependencies = { "nvim-tree/nvim-web-devicons" },
+    dependencies = { "nvim-tree/nvim-web-devicons", "catppuccin/nvim" },
     config = function()
       require("lualine").setup({
         options = {
-          theme = "catppuccin",
+          theme = "auto",
           component_separators = { left = "", right = "" },
           section_separators = { left = "", right = "" },
           globalstatus = true,
@@ -99,6 +99,9 @@ return {
   {
     "rcarriga/nvim-notify",
     config = function()
+      require("notify").setup({
+        background_colour = "#000000",
+      })
       vim.notify = require("notify")
     end,
   },

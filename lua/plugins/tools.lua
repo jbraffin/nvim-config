@@ -151,12 +151,10 @@ return {
         },
       })
 
-      wk.register({
-        ["<leader>"] = {
-          f = { name = "+find" },
-          l = { name = "+lsp" },
-          g = { name = "+git" },
-        },
+      wk.add({
+        { "<leader>f", group = "find" },
+        { "<leader>g", group = "git" },
+        { "<leader>l", group = "lsp" },
       })
     end,
   },
@@ -226,4 +224,5 @@ return {
       })
     end,
   },
+
 }
