@@ -75,11 +75,19 @@ return {
       require("nvim-tree").setup({
         sort_by = "case_sensitive",
         view = {
-          width = 30,
+          width = {
+            min = 25,
+            max = 50,
+          },
           side = "left",
+          adaptive_size = true,
+          preserve_window_proportions = true,
         },
+        respect_buf_cwd = true,
         renderer = {
           group_empty = true,
+          full_name = false,
+          highlight_git = true,
           icons = {
             glyphs = {
               default = "",
@@ -114,6 +122,10 @@ return {
         git = {
           enable = true,
           timeout = 400,
+        },
+        update_focused_file = {
+          enable = true,
+          update_cwd = true,
         },
       })
     end,

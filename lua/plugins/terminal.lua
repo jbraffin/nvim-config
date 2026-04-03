@@ -27,6 +27,9 @@ return {
       -- Keymaps pratiques
       local opts = { noremap = true, silent = true }
       
+      -- Escape pour sortir du mode terminal (revenir en mode command)
+      vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], opts)
+      
       -- Terminal flottant
       vim.keymap.set("n", "<leader>tf", "<cmd>ToggleTerm direction=float<CR>", opts)
       

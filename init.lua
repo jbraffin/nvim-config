@@ -18,7 +18,7 @@ require("config.keymaps")
 require("config.git-graph")
 
 -- ═══════════════════════════════════════════════════════════
--- Auto-launch nvim-tree and terminal on startup
+-- Auto-launch nvim-tree on startup
 -- ═══════════════════════════════════════════════════════════
 vim.api.nvim_create_autocmd("UIEnter", {
   callback = function()
@@ -26,14 +26,6 @@ vim.api.nvim_create_autocmd("UIEnter", {
     vim.schedule(function()
       -- Open nvim-tree
       vim.cmd("NvimTreeToggle")
-
-      -- Give plugins time to respond to state changes
-      vim.defer_fn(function()
-        -- Navigate to the main editor window
-        vim.cmd("wincmd l")
-        -- Open terminal vertically on the right
-        vim.cmd("ToggleTerm direction=vertical size=80")
-      end, 200)
     end)
   end,
   nested = true,
