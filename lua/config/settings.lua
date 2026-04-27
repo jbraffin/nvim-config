@@ -31,6 +31,13 @@ vim.opt.scrolloff = 10             -- Garder 10 lignes visibles au-dessus/dessou
 vim.opt.sidescrolloff = 10         -- Garder 10 colonnes visibles à gauche/droite
 vim.opt.splitright = true          -- Splits verticaux à droite par défaut
 vim.opt.splitbelow = true          -- Splits horizontaux en bas par défaut
+vim.opt.list = true                -- Afficher les caractères invisibles
+vim.opt.listchars = {              -- Configurer l'affichage des caractères invisibles
+  tab = "→ ",                      -- Afficher les tabs avec une flèche
+  trail = "·",                     -- Afficher les espaces de fin avec un point
+  nbsp = "⎵",                      -- Afficher les non-breaking spaces
+}
+vim.opt.colorcolumn = "80,120"     -- Ajouter des lignes verticales discrètes à 80 et 120 caractères
 
 -- Performance
 vim.opt.updatetime = 250           -- Temps avant mise à jour (utile pour gitsigns)
