@@ -10,82 +10,52 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     build = ":TSUpdate",
-    lazy = true,
-    event = { "BufReadPre", "BufNewFile" },
+    lazy = false,
     config = function()
-      -- Vérifier que les parseurs sont disponibles avant de les charger
-      local ok, configs = pcall(require, "nvim-treesitter.configs")
-      if not ok then
-        vim.notify("Treesitter configs not loaded yet", vim.log.levels.WARN)
-        return
-      end
+      local treesitter = require("nvim-treesitter")
+      local languages = {
+        "bash",
+        "c",
+        "cpp",
+        "css",
+        "csv",
+        "dockerfile",
+        "dot",
+        "hcl",
+        "html",
+        "http",
+        "javascript",
+        "jsdoc",
+        "json",
+        "lua",
+        "markdown",
+        "markdown_inline",
+        "python",
+        "query",
+        "regex",
+        "sql",
+        "terraform",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "yaml",
+      }
 
-      configs.setup({
-        -- Tous les parseurs qui seront automatiquement installés
-        ensure_installed = {
-          "bash",
-          "c",
-          "cpp",
-          "css",
-          "csv",
-          "dockerfile",
-          "dot",
-          "hcl",
-          "html",
-          "http",
-          "javascript",
-          "jsdoc",
-          "json",
-          "lua",
-          "markdown",
-          "markdown_inline",
-          "python",
-          "query",
-          "regex",
-          "sql",
-          "terraform",
-          "toml",
-          "tsx",
-          "typescript",
-          "vim",
-          "yaml",
-        },
-        sync_install = false,
-        auto_install = true,
-        -- Fonctionnalités activées
-        highlight = {
-          enable = true,
-          -- Désactiver pour les fichiers très larges pour la performance
-          disable = function(lang, bufnr)
-            local buf_size = vim.api.nvim_buf_get_offset(bufnr, vim.api.nvim_buf_line_count(bufnr))
-            return buf_size > 10000
-          end,
-          additional_vim_regex_highlighting = false,
-        },
-        -- Indentation automatique intelligente
-        indent = {
-          enable = true,
-        },
-        -- Sélection incrémentale (Ctrl+Space)
-        incremental_selection = {
-          enable = true,
-          keymaps = {
-            init_selection = "<C-space>",
-            node_incremental = "<C-space>",
-            scope_incremental = "<C-s>",
-            node_decremental = "<C-backspace>",
-          },
-        },
-        -- Meilleure navigation au-dessus du code
-        textobjects = {
-          enable = true,
-        },
+      treesitter.setup({
+        install_dir = vim.fn.stdpath("data") .. "/site",
       })
+      treesitter.install(languages)
 
-      -- Foldage (repliage) de code basé sur Treesitter
-      vim.opt.foldmethod = "expr"
-      vim.opt.foldexpr = "nvim_treesitter#foldexpr()"
-      vim.opt.foldenable = false -- Ne pas plier par défaut au démarrage
+      vim.api.nvim_create_autocmd("FileType", {
+        pattern = vim.list_extend(vim.deepcopy(languages), { "terraform-vars" }),
+        callback = function(args)
+          local ok, err = pcall(vim.treesitter.start, args.buf)
+          if not ok then
+            vim.notify(("Tree-sitter parser unavailable: %s"):format(err), vim.log.levels.WARN)
+          end
+        end,
+      })
     end,
   },
 }

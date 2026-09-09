@@ -5,7 +5,7 @@
 -- Configure custom file type associations
 vim.filetype.add({
   extension = {
-    tfvars = "terraform",
+    tfvars = "terraform-vars",
     tf = "terraform",
   },
 })

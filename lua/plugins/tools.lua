@@ -16,13 +16,13 @@ return {
     },
     cmd = "Telescope",
     keys = {
-      { "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find Files" },
-      { "<leader>fg", "<cmd>Telescope live_grep<cr>", desc = "Find by Grep" },
-      { "<leader>fb", "<cmd>Telescope buffers<cr>", desc = "Find Buffers" },
-      { "<leader>fh", "<cmd>Telescope help_tags<cr>", desc = "Find Help" },
+      { "<leader>ff", "<cmd>Telescope find_files<cr>",                desc = "Find Files" },
+      { "<leader>fg", "<cmd>Telescope live_grep<cr>",                 desc = "Find by Grep" },
+      { "<leader>fb", "<cmd>Telescope buffers<cr>",                   desc = "Find Buffers" },
+      { "<leader>fh", "<cmd>Telescope help_tags<cr>",                 desc = "Find Help" },
       { "<leader>fs", "<cmd>Telescope current_buffer_fuzzy_find<cr>", desc = "Find in Buffer" },
-      { "<leader>fd", "<cmd>Telescope diagnostics<cr>", desc = "Find Diagnostics" },
-      { "<leader>fc", "<cmd>Telescope git_commits<cr>", desc = "Find Commits" },
+      { "<leader>fd", "<cmd>Telescope diagnostics<cr>",               desc = "Find Diagnostics" },
+      { "<leader>fc", "<cmd>Telescope git_commits<cr>",               desc = "Find Commits" },
     },
     config = function()
       local telescope = require("telescope")
@@ -117,7 +117,7 @@ return {
         },
         filters = {
           dotfiles = false,
-          git_ignored = true,
+          git_ignored = false,
         },
         git = {
           enable = true,

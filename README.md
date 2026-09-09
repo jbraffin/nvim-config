@@ -2,6 +2,12 @@
 
 Une configuration Neovim professionnelle avec tous les plugins essentiels pour un IDE moderne.
 
+## Installation
+
+### Sur ubuntu via homebrew
+PAs oublié d'installé golang-go
+et npm config set cafile /etc/ssl/certs/ca-certificates.crt
+
 ## 🏗️ Structure de la configuration
 
 ```

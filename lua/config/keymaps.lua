@@ -53,6 +53,18 @@ keymap("n", "<C-y>", "<C-r>", opts)
 keymap("n", "<C-s>", ":w<CR>", opts)
 
 -- ─────────────────────────────────────────────────────────────
+-- Delete operations (use black hole register - don't affect clipboard)
+-- ─────────────────────────────────────────────────────────────
+-- Apply to all delete commands: dd, dw, d$, d_, :%d, etc.
+
+keymap("n", "d", '"_d', opts)  -- Normal mode: all delete motions
+keymap("v", "d", '"_d', opts)  -- Visual mode: delete selection
+keymap("n", "D", '"_D', opts)  -- Delete to end of line
+
+-- Remap Ex command :d to use black hole register (for :%d, :100,200d, etc.)
+vim.cmd("cnoreabbrev <expr> d getcmdtype()==':' && getcmdline() =~? 'd$' ? '_d' : 'd'")
+
+-- ─────────────────────────────────────────────────────────────
 -- Session management
 -- ─────────────────────────────────────────────────────────────
 
