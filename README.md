@@ -253,7 +253,7 @@ K           - Afficher la documentation (hover)
 <leader>hu  - Undo stage hunk
 <leader>hR  - Reset tout le buffer
 <leader>gs  - Git Status (Fugitive)
-<leader>gg  - LazyGit (interface TUI complète)
+<leader>gg  - Git graph dans un panneau vertical
 ```
 
 ### 💻 **Terminal** (ToggleTerm)

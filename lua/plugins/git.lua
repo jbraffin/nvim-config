@@ -89,6 +89,19 @@ return {
   },
 
   -- ═══════════════════════════════════════════════════════════
+  -- Flog: interactive commit graph
+  -- ═══════════════════════════════════════════════════════════
+  {
+    "rbong/vim-flog",
+    cmd = { "Flog", "Flogsplit", "Floggit" },
+    dependencies = { "tpope/vim-fugitive" },
+    keys = {
+      { "<leader>gg", "<cmd>botright vertical Flogsplit -all<cr>", desc = "Git Graph" },
+      { "<leader>gla", "<cmd>botright vertical Flogsplit -all<cr>", desc = "Git Graph (all branches)" },
+    },
+  },
+
+  -- ═══════════════════════════════════════════════════════════
   -- Rhubarb: GitHub integration for Fugitive
   -- ═══════════════════════════════════════════════════════════
   -- Permet de voir les fichiers sur GitHub directement
